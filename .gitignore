@@ -1,0 +1,6 @@
+*
+!lab1/
+!lab1/Makefile
+!lab1/src/
+!lab1/src/**
+!.gitignore
