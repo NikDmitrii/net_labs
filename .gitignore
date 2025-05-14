@@ -1,6 +1,7 @@
 *
 !lab1/
-!lab1/Makefile
-!lab1/src/
-!lab1/src/**
+!lab1/client/
+!lab1/client/Makefile
+!lab1/client/src/
+!lab1/client/src/**
 !.gitignore
