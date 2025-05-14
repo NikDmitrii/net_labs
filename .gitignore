@@ -10,5 +10,13 @@
 !lab1/server/src/
 !lab1/server/src/**
 
+!lab1/java_client/pom.xml
+!lab1/java_client/
+!lab1/java_client/src/
+!lab1/java_client/src/main/
+!lab1/java_client/src/main/java/
+!lab1/java_client/src/main/java/app/
+!lab1/java_client/src/main/java/app/nik/
+!lab1/java_client/src/main/java/app/nik/**
 !.gitignore
 !README.md
