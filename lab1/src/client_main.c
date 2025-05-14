@@ -8,7 +8,7 @@ static void OnResponseCallback(const char* const msg, const char* const ip, cons
     printf("Msg: %s ip: %s port: %d", msg, ip, port);
 }
 
-static SendInfo* prepareClientInfo(const OptionsData* options) 
+static SendInfo* prepareClientInfo(const OptionsData* const options) 
 {
     SendInfo* clientInfo = createInfo(options->netName, BROADCAST_MSG, options->port);
     if(clientInfo == NULL)

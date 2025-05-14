@@ -10,14 +10,14 @@ int setupBroadcastSocket()
 {
     int sock;
     
-    if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) 
+    if ((sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) 
     {
         perror("socket");
         return -1;
     }
 
-    int broadcast_enable = 1;
-    if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &broadcast_enable, sizeof(broadcast_enable)) < 0) 
+    int broadcastEnable = 1;
+    if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &broadcastEnable, sizeof(broadcastEnable)) < 0) 
     {
         perror("setsockopt - SO_BROADCAST");
         close(sock);
@@ -27,7 +27,7 @@ int setupBroadcastSocket()
     return sock;
 }
 
-void setupSocketTimeout(int sock, int seconds)
+void setupSocketTimeout(const int sock, const int seconds)
 {
     struct timeval timeout;
     timeout.tv_sec = seconds;
@@ -35,7 +35,7 @@ void setupSocketTimeout(int sock, int seconds)
     setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 }
 
-void setupBroadcastAddress(struct sockaddr_in* addr, uint16_t port, const char* ip)
+void setupBroadcastAddress(struct sockaddr_in* const addr, uint16_t port, const char* const ip)
 {
     memset(addr, 0, sizeof(*addr));
     addr->sin_family = AF_INET;
@@ -43,7 +43,7 @@ void setupBroadcastAddress(struct sockaddr_in* addr, uint16_t port, const char* 
     addr->sin_addr.s_addr = inet_addr(ip);
 }
 
-ErrorCode sendSocketMessage(int sock, const char* msg, const struct sockaddr_in* addr)
+ErrorCode sendSocketMessage(const int sock, const char* const msg, const struct sockaddr_in* const addr)
 {
     if (sendto(sock, msg, strlen(msg), 0,
                (const struct sockaddr*)addr, sizeof(*addr)) < 0) 
@@ -54,27 +54,27 @@ ErrorCode sendSocketMessage(int sock, const char* msg, const struct sockaddr_in*
     return SUCCESS;
 }
 
-ErrorCode receiveSocketResponse(int sock, char* buffer, size_t bufferSize,
-                             struct sockaddr_in* sender_addr, socklen_t* addr_len)
+ErrorCode receiveSocketResponse(const int sock, char* const buffer,const size_t bufferSize,
+                             const struct sockaddr_in* const senderAddr,socklen_t* const addrLen)
 {
-    ssize_t recv_len = recvfrom(sock, buffer, bufferSize - 1, 0,
-                               (struct sockaddr*)sender_addr, addr_len);
+    ssize_t recvLen = recvfrom(sock, buffer, bufferSize - 1, 0,
+                               (struct sockaddr*)senderAddr, addrLen);
 
-    if (recv_len < 0) 
+    if (recvLen < 0) 
     {
         return FAIL;
     }
     
-    buffer[recv_len] = '\0';
+    buffer[recvLen] = '\0';
     return SUCCESS;
 }
 
-const char* getIpString(const struct sockaddr_in* addr)
+const char* getIpString(const struct sockaddr_in* const addr)
 {
     return inet_ntoa(addr->sin_addr);
 }
 
-uint16_t getPort(const struct sockaddr_in* addr)
+uint16_t getPort(const struct sockaddr_in* const addr)
 {
     return ntohs(addr->sin_port);
 } 

@@ -5,15 +5,15 @@
 
 int setupBroadcastSocket();
 
-void setupSocketTimeout(int sock, int seconds);
+void setupSocketTimeout(const int sock, const int seconds);
 
-void setupBroadcastAddress(struct sockaddr_in* addr, uint16_t port, const char* ip);
+void setupBroadcastAddress(struct sockaddr_in* const addr, uint16_t port, const char* const ip);
 
-ErrorCode sendSocketMessage(int sock, const char* msg, const struct sockaddr_in* addr);
+ErrorCode sendSocketMessage(int sock, const char* const msg, const struct sockaddr_in* const addr);
 
-ErrorCode receiveSocketResponse(int sock, char* buffer, size_t bufferSize,
-                             struct sockaddr_in* sender_addr, socklen_t* addr_len);
+ErrorCode receiveSocketResponse(const int sock, char* buffer,const size_t bufferSize,
+                             const struct sockaddr_in* const senderAddr,socklen_t* const addrLen);
 
-const char* getIpString(const struct sockaddr_in* addr);
+const char* getIpString(const struct sockaddr_in* const addr);
 
-uint16_t getPort(const struct sockaddr_in* addr); 
+uint16_t getPort(const struct sockaddr_in* const addr); 
