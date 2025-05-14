@@ -1,4 +1,4 @@
-#include "client.h"
+#include "server.h"
 #include <stdlib.h>
 #include <string.h>
 #include "constants.h"
@@ -20,16 +20,22 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
     }
 
     int sock;
-    struct sockaddr_in broadcastAddr, recvAddr;
+    struct sockaddr_in bindAddr, recvAddr;
     char buffer[MIDDLE_BUFFER_SIZE];
-    socklen_t addr_len = sizeof(recvAddr);
+    socklen_t addrLen = sizeof(recvAddr);
 
     if ((sock = setupBroadcastSocket()) < 0) 
     {
         return FAIL;
     }
 
-    setupBroadcastAddress(&broadcastAddr, info->socket.port, info->socket.ip);
+    setupBroadcastAddress(&bindAddr, info->socket.port, info->socket.ip);
+
+    if (bind(sock, (struct sockaddr*)&bindAddr, sizeof(bindAddr)) < 0) {
+        perror("bind");
+        goto fail;
+    }
+
     
     size_t attempts = 0;
 
@@ -38,22 +44,15 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
         ++attempts;
         printf("Try: #%zu: send broadcast-msg...\n", attempts);
 
-        if (sendSocketMessage(sock, info->msg, &broadcastAddr) == FAIL)
-        {
-            goto fail;
+        if (receiveSocketResponse(sock, buffer, MIDDLE_BUFFER_SIZE, &recvAddr, &addrLen) == FAIL) {
+            perror("recvfrom");
+            continue;
         }
 
-        setupSocketTimeout(sock, info->timeout);
+        onResponse(buffer, getIpString(&recvAddr), getPort(&recvAddr));
 
-        if (receiveSocketResponse(sock, buffer, MIDDLE_BUFFER_SIZE, &recvAddr, &addr_len) == FAIL) 
-        {
-            printf("No answer, retry after %d seconds...\n", info->timeout);
-            continue;
-        } 
-        else
-        {
-            onResponse(buffer, getIpString(&recvAddr), getPort(&recvAddr));
-            break;
+        if (sendSocketMessage(sock, info->msg, &recvAddr) == FAIL) {
+            fprintf(stderr, "Error, send server answer\n");
         }
     }
 

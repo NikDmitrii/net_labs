@@ -4,4 +4,10 @@
 !lab1/client/Makefile
 !lab1/client/src/
 !lab1/client/src/**
+
+!lab1/server/
+!lab1/server/Makefile
+!lab1/server/src/
+!lab1/server/src/**
+
 !.gitignore

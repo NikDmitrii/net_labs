@@ -1,4 +1,4 @@
-#include "client.h"
+#include "server.h"
 #include "options_handler.h"
 #include <stdio.h>
 #include "constants.h"
@@ -10,7 +10,7 @@ static void OnResponseCallback(const char* const msg, const char* const ip, cons
 
 static SendInfo* prepareClientInfo(const OptionsData* const options) 
 {
-    SendInfo* clientInfo = createInfo(options->netName, BROADCAST_MSG, options->port);
+    SendInfo* clientInfo = createInfo(options->netName, SERVER_ANSWER, options->port);
     if(clientInfo == NULL)
     {
         fprintf(stderr, "Error, create client info\n");
