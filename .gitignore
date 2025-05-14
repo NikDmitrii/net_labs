@@ -11,3 +11,4 @@
 !lab1/server/src/**
 
 !.gitignore
+!README.md
