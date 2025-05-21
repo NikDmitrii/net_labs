@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "net_util.h"
 
-static ErrorCode localValidatePort(long port, OptionsData* options) {
+static ErrorCode localValidatePort(const uint16_t port, OptionsData* options) {
     if (!validatePort(port)) {
         options->errorCode = FAIL;
         (void)strcpy(options->errorMsg, "Error, invalid port number");
@@ -54,7 +54,7 @@ OptionsData optionsHandle(const int argc, char** argv)
         {
             flags.pOpt = true;
             char* endptr;
-            long val = strtol(optarg, &endptr, 10);
+            uint16_t val = (uint16_t)strtol(optarg, &endptr, 10);
             
             if (*endptr != '\0' || localValidatePort(val, &options) == FAIL) {
                 return options;
