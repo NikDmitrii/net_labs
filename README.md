@@ -73,3 +73,31 @@ mvn exec:java -Dexec.args="--net <ip> --port <port>"
 ```bash
 # Запуск с broadcast адресом
 java -jar target/java_client-1.0-SNAPSHOT-jar-with-dependencies.jar --net 192.168.1.255 --port 12345
+```
+
+
+## Сборка Java сервера
+
+### Требования
+- JDK 21 или выше
+- Maven
+
+### Сборка
+```bash
+cd lab1/java_server
+mvn clean package
+```
+
+### Запуск
+```bash
+# Через java
+java -jar target/java_server-1.0-SNAPSHOT-jar-with-dependencies.jar --net <ip> --port <port>
+
+# Через maven
+mvn exec:java -Dexec.args="--net <ip> --port <port>"
+```
+
+### Пример
+```bash
+# Запуск с broadcast адресом
+java -jar target/java_server-1.0-SNAPSHOT-jar-with-dependencies.jar --net 192.168.1.255 --port 12345
