@@ -52,7 +52,7 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
         } 
         else
         {
-            onResponse(buffer, getIpString(&recvAddr), getPort(&recvAddr));
+            onResponse(buffer, getIpString(&broadcastAddr), getPort(&broadcastAddr));
             break;
         }
     }
