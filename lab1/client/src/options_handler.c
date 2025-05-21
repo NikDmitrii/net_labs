@@ -8,9 +8,10 @@
 #include <stdbool.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include "net_util.h"
 
-static ErrorCode validatePort(long port, OptionsData* options) {
-    if (port <= 0 || port > MAX_PORT_VALUE) {
+static ErrorCode localValidatePort(long port, OptionsData* options) {
+    if (!validatePort(port)) {
         options->errorCode = FAIL;
         (void)strcpy(options->errorMsg, "Error, invalid port number");
         return FAIL;
@@ -55,7 +56,7 @@ OptionsData optionsHandle(const int argc, char** argv)
             char* endptr;
             long val = strtol(optarg, &endptr, 10);
             
-            if (*endptr != '\0' || validatePort(val, &options) == FAIL) {
+            if (*endptr != '\0' || localValidatePort(val, &options) == FAIL) {
                 return options;
             }
             

@@ -20,7 +20,7 @@ public class Main {
                                 .build()
                 ) {
                     client.sendAndReceive("Hello from Java", (response, sender) -> {
-                        System.out.println("Reveive : " + sender.getHostAddress() + " -> " + response);
+                        System.out.println("Receive : " + sender.getHostAddress() + " -> " + response);
                     });
                 } catch (IOException e) {
                     e.printStackTrace(System.err);

@@ -17,3 +17,5 @@ ErrorCode receiveSocketResponse(const int sock, char* buffer,const size_t buffer
 const char* getIpString(const struct sockaddr_in* const addr);
 
 uint16_t getPort(const struct sockaddr_in* const addr); 
+
+bool validatePort(const uint16_t port);

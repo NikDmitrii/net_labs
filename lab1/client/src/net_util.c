@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/time.h>
+#include "constants.h"
 
 int setupBroadcastSocket() 
 {
@@ -78,3 +79,7 @@ uint16_t getPort(const struct sockaddr_in* const addr)
 {
     return ntohs(addr->sin_port);
 } 
+
+bool validatePort(const uint16_t port) {
+    return port > MIN_PORT_VALUE && port <= MAX_PORT_VALUE;
+}

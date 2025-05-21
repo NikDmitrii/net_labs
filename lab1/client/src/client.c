@@ -67,6 +67,10 @@ fail:
 
 SendInfo* createInfo(const char* const ip, const char* const msg, const uint16_t port) 
 {
+    if(ip == NULL || msg == NULL || !validatePort(port)){
+        return NULL;
+    }
+
     SendInfo* info = (SendInfo*)malloc(sizeof(SendInfo));
     if (info == NULL) 
     {
@@ -106,7 +110,7 @@ error:
 
 ErrorCode setTimeout(SendInfo* info, const int sec) 
 {
-    if (info == NULL) 
+    if (info == NULL || sec < 0) 
     {
         return FAIL;
     }
@@ -115,7 +119,7 @@ ErrorCode setTimeout(SendInfo* info, const int sec)
 }
 
 ErrorCode setPort(SendInfo* info, const uint16_t port) {
-    if (info == NULL || port <= 0 || port > MAX_PORT_VALUE) 
+    if (info == NULL || !validatePort(port)) 
     {
         return FAIL;
     }
