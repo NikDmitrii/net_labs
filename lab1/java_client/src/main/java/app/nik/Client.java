@@ -3,12 +3,15 @@ package app.nik;
 import java.io.IOException;
 import java.net.*;
 
+import static app.nik.AppConstants.*;
+
 public class Client implements AutoCloseable{
 
     private final DatagramSocket socket;
     private final InetAddress ip;
     private final int port;
     private final int timeoutSeconds;
+    byte[] receiveData = new byte[MAX_UDP_LEN];
 
     private Client(Builder builder) throws SocketException, UnknownHostException {
         this.ip = InetAddress.getByName(builder.ip);
@@ -28,8 +31,10 @@ public class Client implements AutoCloseable{
     }
 
     public void sendAndReceive(String message, OnResponse onResponse) throws IOException {
-        byte[] receiveData = new byte[1024];
-        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        if(message.length() > MAX_UDP_LEN){
+            throw new IOException("Message exceeds maximum UDP packet size of " + MAX_UDP_LEN + " bytes");
+        }
+        DatagramPacket receivePacket = new DatagramPacket(receiveData, message.length());
 
         int attempt = 1;
         while(true){
@@ -55,9 +60,9 @@ public class Client implements AutoCloseable{
     }
 
     public static class Builder {
-        private String ip = "255.255.255.255"; // default broadcast
+        private String ip = "255.255.255.255";
         private int port = 12345;
-        private int timeoutSeconds = 10;
+        private int timeoutSeconds = TIMEOUT;
 
         public Builder ip(String ip) {
             this.ip = ip;
@@ -65,11 +70,18 @@ public class Client implements AutoCloseable{
         }
 
         public Builder port(int port) {
+            if(port < MIN_PORT || port > MAX_PORT){
+                throw new IllegalArgumentException("port <" + MIN_PORT + "or" + "port >" + MAX_PORT);
+            }
+
             this.port = port;
             return this;
         }
 
         public Builder timeout(int seconds) {
+            if (seconds <= 0) {
+                throw new IllegalArgumentException("Timeout must be positive");
+            }
             this.timeoutSeconds = seconds;
             return this;
         }

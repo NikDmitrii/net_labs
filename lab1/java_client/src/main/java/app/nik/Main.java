@@ -4,6 +4,8 @@ import picocli.CommandLine;
 
 import java.io.IOException;
 
+import static app.nik.AppConstants.TIMEOUT;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -13,7 +15,7 @@ public class Main {
                 try (
                         Client client = new Client.Builder()
                                 .port(getPort())
-                                .timeout(10)
+                                .timeout(TIMEOUT)
                                 .ip(getNet())
                                 .build()
                 ) {
