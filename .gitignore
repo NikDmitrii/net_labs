@@ -18,5 +18,15 @@
 !lab1/java_client/src/main/java/app/
 !lab1/java_client/src/main/java/app/nik/
 !lab1/java_client/src/main/java/app/nik/**
+
+!lab1/java_server/pom.xml
+!lab1/java_server/
+!lab1/java_server/src/
+!lab1/java_server/src/main/
+!lab1/java_server/src/main/java/
+!lab1/java_server/src/main/java/app/
+!lab1/java_server/src/main/java/app/nik/
+!lab1/java_server/src/main/java/app/nik/**
+
 !.gitignore
 !README.md
