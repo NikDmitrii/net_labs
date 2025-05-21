@@ -22,7 +22,7 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
     int sock;
     struct sockaddr_in broadcastAddr, recvAddr;
     char buffer[MIDDLE_BUFFER_SIZE];
-    socklen_t addr_len = sizeof(recvAddr);
+    socklen_t addrLen = sizeof(recvAddr);
 
     if ((sock = setupBroadcastSocket()) < 0) 
     {
@@ -45,7 +45,7 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
 
         setupSocketTimeout(sock, info->timeout);
 
-        if (receiveSocketResponse(sock, buffer, MIDDLE_BUFFER_SIZE, &recvAddr, &addr_len) == FAIL) 
+        if (receiveSocketResponse(sock, buffer, MIDDLE_BUFFER_SIZE, &recvAddr, &addrLen) == FAIL) 
         {
             printf("No answer, retry after %d seconds...\n", info->timeout);
             continue;
