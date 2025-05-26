@@ -12,6 +12,7 @@ struct SendInfo {
     int timeout;
 };
 
+
 ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
 {
     if(info == NULL || onResponse == NULL)
@@ -52,7 +53,7 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
         } 
         else
         {
-            onResponse(buffer, getIpString(&broadcastAddr), getPort(&broadcastAddr));
+            onResponse(buffer, getIpString(&recvAddr), getPort(&recvAddr));
             break;
         }
     }
