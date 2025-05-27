@@ -38,7 +38,7 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
 
     
     size_t attempts = 0;
-
+    setupSocketTimeout(sock, info->timeout);
     while (true) 
     {
         ++attempts;
