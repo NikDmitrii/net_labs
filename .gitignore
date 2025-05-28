@@ -40,5 +40,23 @@
 !lab1/java_server/src/main/java/app/nik/
 !lab1/java_server/src/main/java/app/nik/**
 
+!lab2/java_client/pom.xml
+!lab2/java_client/
+!lab2/java_client/src/
+!lab2/java_client/src/main/
+!lab2/java_client/src/main/java/
+!lab2/java_client/src/main/java/app/
+!lab2/java_client/src/main/java/app/nik/
+!lab2/java_client/src/main/java/app/nik/**
+
+!lab2/java_server/pom.xml
+!lab2/java_server/
+!lab2/java_server/src/
+!lab2/java_server/src/main/
+!lab2/java_server/src/main/java/
+!lab2/java_server/src/main/java/app/
+!lab2/java_server/src/main/java/app/nik/
+!lab2/java_server/src/main/java/app/nik/**
+
 !.gitignore
 !README.md
