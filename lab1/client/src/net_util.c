@@ -36,12 +36,18 @@ void setupSocketTimeout(const int sock, const int seconds)
     setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 }
 
-void setupBroadcastAddress(struct sockaddr_in* const addr, uint16_t port, const char* const ip)
+ErrorCode setupSockAddress(struct sockaddr_in* const addr, uint16_t port, const char* const ip)
 {
     memset(addr, 0, sizeof(*addr));
     addr->sin_family = AF_INET;
     addr->sin_port = htons(port);
-    addr->sin_addr.s_addr = inet_addr(ip);
+
+    if (inet_pton(AF_INET, ip, &addr->sin_addr) <= 0) {
+        perror("inet_pton");
+        return FAIL;
+    }
+
+    return SUCCESS;
 }
 
 ErrorCode sendSocketMessage(const int sock, const char* const msg, const struct sockaddr_in* const addr)

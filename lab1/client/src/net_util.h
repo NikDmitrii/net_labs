@@ -7,7 +7,7 @@ int setupBroadcastSocket();
 
 void setupSocketTimeout(const int sock, const int seconds);
 
-void setupBroadcastAddress(struct sockaddr_in* const addr, uint16_t port, const char* const ip);
+ErrorCode setupSockAddress(struct sockaddr_in* const addr, uint16_t port, const char* const ip);
 
 ErrorCode sendSocketMessage(int sock, const char* const msg, const struct sockaddr_in* const addr);
 

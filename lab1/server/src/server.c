@@ -29,7 +29,9 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
         return FAIL;
     }
 
-    setupBroadcastAddress(&bindAddr, info->socket.port, info->socket.ip);
+    if(setupSockAddress(&bindAddr, info->socket.port, info->socket.ip) != SUCCESS){
+        goto fail;
+    }
 
     if (bind(sock, (struct sockaddr*)&bindAddr, sizeof(bindAddr)) < 0) {
         perror("bind");

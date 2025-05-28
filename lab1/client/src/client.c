@@ -30,7 +30,9 @@ ErrorCode sendBroadcast(const SendInfo* const info, OnResponse onResponse)
         return FAIL;
     }
 
-    setupBroadcastAddress(&broadcastAddr, info->socket.port, info->socket.ip);
+    if(setupSockAddress(&broadcastAddr, info->socket.port, info->socket.ip) == FAIL){
+        goto fail;
+    }
     
     size_t attempts = 0;
 
