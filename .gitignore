@@ -10,6 +10,18 @@
 !lab1/server/src/
 !lab1/server/src/**
 
+!lab2/
+!lab2/client/
+!lab2/client/Makefile
+!lab2/client/src/
+!lab2/client/src/**
+
+!lab2/server/
+!lab2/server/Makefile
+!lab2/server/src/
+!lab2/server/src/**
+
+
 !lab1/java_client/pom.xml
 !lab1/java_client/
 !lab1/java_client/src/
